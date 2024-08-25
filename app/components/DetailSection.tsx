@@ -17,11 +17,11 @@ export default function DetailSection() {
           className=""
         />
           </div>
-          <div className="flex  flex-col    w-full items-center sm:items-start max-sm:text-center">
-            
+          <div className="flex  flex-col  w-full items-center  max-sm:text-center">
+            <div className=''>
            <h2 className='text-3xl text-[#262364] font-semibold '>Learn In smart Way</h2>
            <p className=' text-slate-600 text-sm pt-2  max-w-[37ch]'>You have virtual madrasa in 3 languages Including vibrent and required subjects,So <span className='font-semi-bold text-[#262364]'> why do you wait?</span> </p>
-
+           </div>
          </div>
         </div>
     </section>

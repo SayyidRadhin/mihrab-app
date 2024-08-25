@@ -21,9 +21,9 @@ export default function Home() {
   }
 
   return (
-     <div className=" bg-white overflow-hidden grid w-full min-h-screen   ">
+     <div className=" scroll-smooth bg-white overflow-hidden grid w-full min-h-screen   ">
        <Navbar/>
-       <section className='max-w-5xl grid items-center  w-full mt-0 flex-col mx-auto max-lg:px-[10%] min-h-screen'>
+       <section id="home" className='max-w-5xl grid items-center  w-full mt-0 flex-col mx-auto max-lg:px-[10%] min-h-screen'>
         
         <div className='text-black h-full mt-28 flex sm:flex-row justify-center  flex-col-reverse max-sm:mt-10 max-sm:gap-2 gap-2 w-full max-h-[80%] sm:h-[80%] items-center '>
           <div className="flex  flex-col    w-full items-center sm:items-start max-sm:text-center">
@@ -51,7 +51,7 @@ export default function Home() {
        </section>
        <CardSection/>
        <DetailSection/>
-       <section className="bg-black">
+       <section id="contact" className="bg-black">
        {/* <SliderDesign/> */}
        <SliderDesign/>
 

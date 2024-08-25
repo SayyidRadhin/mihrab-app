@@ -44,9 +44,9 @@ export default function Navbar() {
           </div>
           <div className="flex gap-4 items-center text-sm">
         <ul className="list-none max-sm:hidden flex gap-2 font-medium text-[#262364] mr-6">
-             <li>Home           </li>
-             <li>Courses</li>
-              <li>Contact Us</li>
+             <li><Link href="#home" >Home</Link> </li>
+             <li><Link href="#courses" >Courses</Link> </li>
+             <li><Link href="#contact" >Contact Us</Link> </li>
             </ul>
            <Link href="/login"> <button className=" bg-[#262364] text-sm text-white rounded px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">JoinNow</button></Link>
 
