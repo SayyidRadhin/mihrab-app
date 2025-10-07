@@ -30,7 +30,7 @@ export default function Navbar() {
      }}
      animate={hidden ? "hidden" : "visible"}
      transition={{duration:0.35,ease:"easeInOut"}}
-     className={`${background ? "bg-white shadow-md" : ""} scroll- px-10 fixed top-0 left-0 w-full flex items-center justify-between border-b-slate-300 `}>
+     className={`${background ? "bg-secondary shadow-md" : ""} scroll- px-10 fixed top-0 left-0 w-full flex items-center justify-between border-b-slate-300 `}>
           <div className="w-44">
           <Image
           src="/mihrabLogo.png"
@@ -48,7 +48,7 @@ export default function Navbar() {
              <li><Link href="#courses" >Courses</Link> </li>
              <li><Link href="#contact" >Contact Us</Link> </li>
             </ul>
-           <Link href="/login"> <button className=" bg-[#262364] text-sm text-white rounded px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">JoinNow</button></Link>
+           {/* <Link href="/login"> <button className=" bg-[#262364] text-sm text-white rounded px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">JoinNow</button></Link> */}
 
           </div>
         </motion.nav>

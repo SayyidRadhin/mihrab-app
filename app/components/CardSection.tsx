@@ -3,64 +3,66 @@ import React from 'react'
 
 function CardSection() {
   return (
-    <section id='courses' className='py-8 max-w-5xl w-full mt-0 flex-col mx-auto max-lg:px-[10%] text-black'>
-        <h2 className='text-center text-3xl text-[#262364] font-semibold '>Explore Our Courses</h2>
-        <p className='text-center text-slate-600 text-sm mx-auto pt-2 pb-7 max-w-[37ch]'>You have virtual madrasa in 3 languages Including vibrent and required subjects,So <span className='font-semi-bold text-[#262364]'> why do you wait?</span> </p>
-        <div className='flex-col gap-7 sm:flex-row flex'>
-          <div className='card shadow-md rounded-lg border border-slate-100    '>
-            <div className='overflow-hidden rounded-tr-lg rounded-tl-lg'>
-          <Image
-          src="/madrasa-eng.png"
-          alt=""
-          width={200}
-          height={200}
-          layout="responsive"
-          loading="lazy"
-          className="rounded-tr-lg rounded-tl-lg hover:scale-110 transition"
-           />
-           </div>
-           <div className='px-7 py-9 '>
-            <h6 className='font-bold text-[#262364]'>Madrasa English</h6>
-            <p className='text-sm text-slate-600 pt-4'>This will encourage your concept in islam and make you and your child a success devote. </p>
-            <button className='bg-[#262364] hover:bg-[#504c9d] transition rounded border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
+    <section id='courses' className='py-8 w-full bg-primary rounded-[2em] mt-0 flex-col mx-auto max-lg:px-[10%] text-black'>
+      <div className='max-w-5xl w-full mt-0 flex-col mx-auto mt-4'>
+        <h2 className='text-center text-4xl text-secondary font-semibold '>Explore Our Courses</h2>
+                <h2 className='text-center text-4xl text-secondary font-semibold '>With fast</h2>
 
-           </div>
-          </div>
-          <div className='card shadow-md rounded-lg border border-slate-100'>
-            <div className='overflow-hidden rounded-tr-lg rounded-tl-lg'>
+        <div className='flex-col gap-7 sm:flex-row flex mt-4 gap-2'>
+          <div className='card shadow-md rounded-3xl bg-secondary   px-4 py-6 flex flex-col items-center  '>
+            <h6 className='font-bold text-[#262364]'>01</h6>
+
+            <h1 className='font-bold text-center text-[#262364] text-3xl'>Online Classes</h1>
+
           <Image
-          src="/madrasa-urdu.png"
+          src="/laptop.png"
           alt=""
-          width={200}
-          height={200}
+          width={15}
+          height={15}
           layout="responsive"
           loading="lazy"
-          className="rounded-tr-lg rounded-tl-lg hover:scale-110 transition"
+          className="rounded-tr-lg rounded-tl-lg max-w-14 hover:scale-110 transition mt-4"
            />
-           </div>
-           <div className='px-7 py-9'>
-            <h6 className='font-bold text-[#262364]'>Madrasa Urdu</h6>
-            <p className='text-sm text-slate-600 pt-2'>This will encourage your concept in islam and make you and your child a success devote. </p>
-            <button className='bg-[#262364] hover:bg-[#504c9d] transition rounded border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
-           </div>
+            <p className='text-sm text-slate-600 pt-4 text-center'>This will encourage your concept in islam and make you and your child a success devote. </p>
+            <button className='border border-slate-300 transition rounded-full border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
+
           </div>
-          <div className='card shadow-md rounded-lg border border-slate-100'>
-            <div className='overflow-hidden rounded-tr-lg rounded-tl-lg'>
+         <div className='card shadow-md rounded-3xl bg-secondary   px-4 py-6 flex flex-col items-center  '>
+            <h6 className='font-bold text-[#262364]'>01</h6>
+
+            <h1 className='font-bold text-center text-[#262364] text-3xl'>Online Classes</h1>
+
           <Image
-          src="/madrasa-mal.png"
+          src="/laptop.png"
           alt=""
-          width={200}
-          height={200}
+          width={15}
+          height={15}
           layout="responsive"
           loading="lazy"
-          className="rounded-tr-lg rounded-tl-lg hover:scale-110 transition"
+          className="rounded-tr-lg rounded-tl-lg max-w-14 hover:scale-110 transition mt-4"
            />
-           </div>
-           <div className='px-7 py-9'>
-            <h6 className='font-bold text-[#262364]'>Madrasa Malayalam</h6>
-            <p className='text-sm text-slate-600 pt-2'>This will encourage your concept in islam and make you and your child a success devote. </p>
-            <button className='bg-[#262364] hover:bg-[#504c9d] transition rounded border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
-           </div>
+            <p className='text-sm text-slate-600 pt-4 text-center'>This will encourage your concept in islam and make you and your child a success devote. </p>
+            <button className='border border-slate-300 transition rounded-full border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
+
+          </div>
+         <div className='card shadow-md rounded-3xl bg-secondary   px-4 py-6 flex flex-col items-center  '>
+            <h6 className='font-bold text-[#262364]'>01</h6>
+
+            <h1 className='font-bold text-center text-[#262364] text-3xl'>Online Classes</h1>
+
+          <Image
+          src="/laptop.png"
+          alt=""
+          width={15}
+          height={15}
+          layout="responsive"
+          loading="lazy"
+          className="rounded-tr-lg rounded-tl-lg max-w-14 hover:scale-110 transition mt-4"
+           />
+            <p className='text-sm text-slate-600 pt-4 text-center'>This will encourage your concept in islam and make you and your child a success devote. </p>
+            <button className='border border-slate-300 transition rounded-full border-none text-white py-2 px-4 mx-auto mt-2 text-sm' > join now</button>
+
+          </div>
           </div>
         </div>
     </section>
