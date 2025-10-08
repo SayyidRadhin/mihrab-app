@@ -30,7 +30,7 @@ export default function Navbar() {
      }}
      animate={hidden ? "hidden" : "visible"}
      transition={{duration:0.35,ease:"easeInOut"}}
-     className={`${background ? "bg-secondary shadow-md" : ""} scroll- px-10 fixed top-0 left-0 w-full flex items-center justify-between border-b-slate-300 `}>
+     className={`${background ? "bg-secondary " : ""} scroll- px-10 fixed top-0 left-0 w-full flex items-center justify-between border-b-slate-300 `}>
           <div className="w-44">
           <Image
           src="/mihrabLogo.png"
