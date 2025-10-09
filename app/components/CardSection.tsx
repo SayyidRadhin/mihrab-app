@@ -3,12 +3,12 @@ import React from 'react'
 
 function CardSection() {
   return (
-    <section id='courses' className='py-24 w-full bg-primary rounded-[2em] mt-0 flex-col mx-auto max-lg:px-[10%] text-black'>
+    <section id='courses' className='py-24 sm:py-32 w-full bg-primary rounded-[2em] mt-0 flex-col mx-auto max-lg:px-[10%] text-black'>
       <div className='max-w-5xl w-full  flex-col mx-auto '>
-        <h2 className='text-center text-4xl text-secondary font-semibold '>Explore Our Courses</h2>
-                <h2 className='text-center text-4xl text-secondary font-semibold '>With fast</h2>
+        <h2 className='text-center text-4xl text-secondary font-semibold uppercase'>Explore Our Courses</h2>
+                <h2 className='text-center text-4xl text-secondary font-semibold uppercase'>With fast</h2>
 
-        <div className='flex-col gap-7 sm:flex-row flex mt-4 gap-2'>
+        <div className='flex-col gap-7 sm:flex-row flex mt-10 gap-2 '>
           <div className='card shadow-md rounded-3xl bg-secondary   px-4 py-6 flex flex-col items-center  '>
             <h6 className='font-bold text-[#262364]'>01</h6>
 
