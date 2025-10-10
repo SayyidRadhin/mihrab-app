@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anek_Malayalam, Inter,Bungee ,Raleway} from "next/font/google";
 import "./globals.css";
+import GlobalContextProvider from "./contexts/globalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body        className={` ${RalewayFont.variable}  antialiased`}
->{children}</body>
+><GlobalContextProvider>
+          {children}
+          </GlobalContextProvider></body>
     </html>
   );
 }

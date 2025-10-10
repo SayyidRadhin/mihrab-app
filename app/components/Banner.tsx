@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Banner() {
   return (
-    <section className="w-full bg-primary text-white py-7 ">
+    <section className="w-full bg-gradient-to-r from-[#222241] via-[#222241] to-[#222241] text-white py-7 ">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

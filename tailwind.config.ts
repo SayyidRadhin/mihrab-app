@@ -27,6 +27,10 @@ const config: Config = {
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
   		},
   		colors: {
+			primaryAccent: "#1E1E1E",
+        secondaryAccent: "#F9F2E9",
+		DarkBlueAccent:"#262364",
+        accents: "#4ECDC4",
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
