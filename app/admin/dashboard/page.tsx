@@ -1,3 +1,4 @@
+// app/admin/dashboard/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { auth, db } from "@/app/lib/firebaseconfig";
 import Nav from "./nav";
 import { useFCM } from "@/app/hooks/useFCM";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { BellOff, CheckCircle, Database } from "lucide-react";
 
 type Student = {
   id: string;
@@ -31,21 +34,54 @@ function Page() {
   const [lastDocSnap, setLastDocSnap] = useState<DocumentSnapshot | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [initialFetchDone, setInitialFetchDone] = useState(false);
+  const [useMemoryStorage, setUseMemoryStorage] = useState(false);
 
   // Initialize FCM for admin notifications
-  useFCM();
+  const { permission, error: fcmError, tokenSaved } = useFCM();
+
+  // Check if IndexedDB is available
+  const checkIndexedDBSupport = () => {
+    try {
+      return typeof indexedDB !== 'undefined';
+    } catch (e) {
+      return false;
+    }
+  };
 
   const initDB = () => {
     return new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open("studentsDB", 1);
-      request.onupgradeneeded = (event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        if (!db.objectStoreNames.contains("students")) {
-          db.createObjectStore("students", { keyPath: "id" });
-        }
-      };
-      request.onsuccess = (event) => resolve((event.target as IDBOpenDBRequest).result);
-      request.onerror = (event) => reject((event.target as IDBOpenDBRequest).error);
+      if (!checkIndexedDBSupport()) {
+        reject(new Error('IndexedDB not supported'));
+        return;
+      }
+
+      try {
+        const request = indexedDB.open("studentsDB", 1);
+        
+        request.onupgradeneeded = (event) => {
+          const db = (event.target as IDBOpenDBRequest).result;
+          if (!db.objectStoreNames.contains("students")) {
+            db.createObjectStore("students", { keyPath: "id" });
+          }
+        };
+        
+        request.onsuccess = (event) => {
+          resolve((event.target as IDBOpenDBRequest).result);
+        };
+        
+        request.onerror = (event) => {
+          console.error('IndexedDB error:', (event.target as IDBOpenDBRequest).error);
+          reject((event.target as IDBOpenDBRequest).error);
+        };
+        
+        request.onblocked = () => {
+          console.warn('IndexedDB blocked - using memory storage');
+          reject(new Error('IndexedDB blocked'));
+        };
+      } catch (error) {
+        console.error('IndexedDB not available:', error);
+        reject(error);
+      }
     });
   };
 
@@ -56,6 +92,7 @@ function Page() {
         const tx = db.transaction("students", "readonly");
         const store = tx.objectStore("students");
         const request = store.getAll();
+        
         request.onsuccess = () => {
           const data = request.result.sort((a, b) => 
             b.registrationDate.localeCompare(a.registrationDate)
@@ -65,28 +102,41 @@ function Page() {
             setLastNewDate(data[0].registrationDate);
             setHasMore(data.length % 10 === 0);
           }
+          console.log('✅ Loaded from IndexedDB:', data.length, 'students');
           resolve(data);
         };
+        
         request.onerror = () => {
           console.error("Error loading from IndexedDB");
           resolve([]);
         };
       });
     } catch (error) {
-      console.error("IndexedDB error:", error);
+      console.warn("IndexedDB unavailable, using memory storage:", error);
+      setUseMemoryStorage(true);
       return [];
     }
   };
 
   const addToIDB = async (newStudents: Student[]) => {
+    if (useMemoryStorage) {
+      console.log('📦 Using memory storage (IndexedDB unavailable)');
+      return;
+    }
+
     try {
       const db = await initDB();
       const tx = db.transaction("students", "readwrite");
       const store = tx.objectStore("students");
       newStudents.forEach((student) => store.put(student));
-      await new Promise((resolve) => (tx.oncomplete = resolve));
+      await new Promise((resolve, reject) => {
+        tx.oncomplete = resolve;
+        tx.onerror = reject;
+      });
+      console.log('✅ Saved to IndexedDB:', newStudents.length, 'students');
     } catch (error) {
-      console.error("Error adding to IndexedDB:", error);
+      console.warn("Could not save to IndexedDB:", error);
+      setUseMemoryStorage(true);
     }
   };
 
@@ -103,7 +153,7 @@ function Page() {
       if (snap.empty) {
         console.log("No students found in Firebase");
         setHasMore(false);
-        return;
+        return [];
       }
 
       const newData = snap.docs.map((doc) => {
@@ -116,7 +166,7 @@ function Page() {
         } as Student;
       });
 
-      console.log("Fetched initial data:", newData);
+      console.log("Fetched initial data:", newData.length, "students");
       
       if (newData.length > 0) {
         await addToIDB(newData);
@@ -125,15 +175,17 @@ function Page() {
         setLastDocSnap(snap.docs[snap.docs.length - 1]);
         setHasMore(newData.length === 10);
       }
+      return newData;
     } catch (error) {
       console.error("Error fetching initial students:", error);
+      return [];
     }
   };
 
   const fetchNewStudents = async () => {
     if (!lastNewDate) {
-      console.log("No lastNewDate, skipping new student fetch");
-      return;
+      console.log("No lastNewDate, performing initial fetch instead");
+      return fetchInitialStudents();
     }
     
     console.log("Checking for new students after:", lastNewDate);
@@ -148,7 +200,7 @@ function Page() {
       
       if (snap.empty) {
         console.log("No new students found");
-        return;
+        return [];
       }
 
       const newData = snap.docs.map((doc) => {
@@ -161,16 +213,22 @@ function Page() {
         } as Student;
       });
 
-      console.log("Fetched new data:", newData);
+      console.log("Fetched new data:", newData.length, "students");
       
       if (newData.length > 0) {
-        newData.sort((a, b) => b.registrationDate.localeCompare(a.registrationDate));
         await addToIDB(newData);
-        setStudents((prev) => [...newData, ...prev]);
+        setStudents((prev) => {
+          const combined = [...newData, ...prev].sort((a, b) => 
+            b.registrationDate.localeCompare(a.registrationDate)
+          );
+          return combined;
+        });
         setLastNewDate(newData[0].registrationDate);
       }
+      return newData;
     } catch (error) {
       console.error("Error fetching new students:", error);
+      return [];
     }
   };
 
@@ -207,7 +265,7 @@ function Page() {
         } as Student;
       });
 
-      console.log("Fetched older data:", newData);
+      console.log("Fetched older data:", newData.length, "students");
 
       if (newData.length > 0) {
         await addToIDB(newData);
@@ -239,16 +297,35 @@ function Page() {
 
   useEffect(() => {
     if (!loading && !initialFetchDone) {
-      loadFromIDB().then((cachedData) => {
-        if (cachedData.length === 0) {
-          fetchInitialStudents();
-        } else {
-          fetchNewStudents();
+      loadFromIDB().then(async (cachedData) => {
+        // Always fetch new students to ensure we get the latest
+        const newData = await fetchNewStudents();
+        if (cachedData.length === 0 && newData.length === 0) {
+          await fetchInitialStudents();
+        } else if (cachedData.length > 0) {
+          // Merge cached data with new data, avoiding duplicates
+          const combined = [...newData, ...cachedData].filter(
+            (student, index, self) =>
+              index === self.findIndex((s) => s.id === student.id)
+          ).sort((a, b) => b.registrationDate.localeCompare(a.registrationDate));
+          setStudents(combined);
+          setLastNewDate(combined[0]?.registrationDate || null);
+          setHasMore(combined.length % 10 === 0);
         }
         setInitialFetchDone(true);
       });
     }
   }, [loading]);
+
+  // Periodic check for new students
+  useEffect(() => {
+    if (!loading && initialFetchDone) {
+      const interval = setInterval(() => {
+        fetchNewStudents();
+      }, 30000); // Check every 30 seconds
+      return () => clearInterval(interval);
+    }
+  }, [loading, initialFetchDone]);
 
   if (loading) {
     return (
@@ -260,11 +337,65 @@ function Page() {
 
   return (
     <>
-      <Nav />   
-
+      <Nav />
       <div className="w-full max-h-screen min-h-screen flex pt-[5.1em]">
-
         <div className="hero w-full py-3 px-4 sm:px-8 pt-[5em] md:mt-4 overflow-auto">
+          {/* Storage Warning */}
+          {useMemoryStorage && (
+            <Alert className="mb-4 border-orange-500">
+              <Database className="h-4 w-4" />
+              <AlertDescription>
+                Browser storage is unavailable. Data will be fetched from server on each visit.
+                <br />
+                <small>Enable cookies and site data in browser settings for better performance.</small>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Notification Status */}
+          {fcmError ? (
+            <Alert className="mb-4 border-yellow-500">
+              <BellOff className="h-4 w-4" />
+              <AlertDescription>
+                {fcmError === 'No active service worker' ? (
+                  <>
+                    Push notifications disabled: No active service worker.
+                    <br />
+                    <small>Check DevTools > Application > Service Workers to ensure firebase-messaging-sw.js is active. Try refreshing the page.</small>
+                  </>
+                ) : fcmError === 'Invalid service worker registration' ? (
+                  <>
+                    Push notifications disabled: Invalid service worker registration.
+                    <br />
+                    <small>Check firebase-messaging-sw.js and ensure it’s active in DevTools > Application > Service Workers.</small>
+                  </>
+                ) : fcmError === 'Browser storage is blocked' ? (
+                  <>
+                    Push notifications disabled: Browser storage is blocked.
+                    <br />
+                    <small>Go to <strong>chrome://settings/content/all</strong> and allow cookies for this site.</small>
+                  </>
+                ) : (
+                  <>Notifications setup failed: {fcmError}</>
+                )}
+              </AlertDescription>
+            </Alert>
+          ) : tokenSaved ? (
+            <Alert className="mb-4 border-green-500">
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription>
+                Notifications enabled successfully. You'll receive alerts for new registrations.
+              </AlertDescription>
+            </Alert>
+          ) : permission === 'granted' && (
+            <Alert className="mb-4 border-blue-500">
+              <BellOff className="h-4 w-4" />
+              <AlertDescription>
+                Setting up notifications...
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="p-4 w-full mb-2">
             {students.length === 0 ? (
               <div className="text-center py-10">
@@ -274,6 +405,7 @@ function Page() {
               <DataTable columns={studentColumn} data={students} />
             )}
           </div>
+
           {hasMore && students.length > 0 && (
             <div className="flex justify-center mt-4 mb-8">
               <Button onClick={fetchOlderStudents}>Load More</Button>

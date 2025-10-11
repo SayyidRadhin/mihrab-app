@@ -98,7 +98,7 @@ export default function Page() {
       try {
         console.log('📱 Sending notification to admins...');
         
-        const response = await fetch('/api/send-notification', {
+        const response = await fetch('/api/send-notifications', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -22,8 +22,8 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title || 'New Notification';
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/logo.png',
-    badge: '/badge.png',
+    icon: '/mihrabLogo.png', // Ensure this exists
+              badge: '/apple-logo.png',
     tag: 'new-registration',
     data: payload.data,
   };
