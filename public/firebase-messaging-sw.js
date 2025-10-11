@@ -17,28 +17,42 @@ const messaging = firebase.messaging();
 
 // Handle background messages
 messaging.onBackgroundMessage((payload) => {
-  console.log('Received background message:', payload);
+  console.log('[Service Worker] Received background message:', payload);
 
-  const notificationTitle = payload.notification.title || 'New Notification';
+  const notificationTitle = payload.notification?.title || 'New Notification';
   const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/mihrabLogo.png', // Ensure this exists
-              badge: '/apple-logo.png',
-    tag: 'new-registration',
+    body: payload.notification?.body || 'You have a new notification',
+    icon: '/mihrabLogo.png',
+    badge: '/apple-logo.png',
+    tag: 'admin-notification',
     data: payload.data,
+    requireInteraction: true, // Notification stays until user dismisses
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  return self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
-  console.log('Notification clicked:', event);
+  console.log('[Service Worker] Notification clicked:', event.notification);
   
   event.notification.close();
+
+  const clickAction = event.notification.data?.click_action || '/admin/dashboard';
   
-  // Open the admin dashboard when notification is clicked
   event.waitUntil(
-    clients.openWindow('/admin/dashboard')
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then((clientList) => {
+        // Focus existing window if available
+        for (const client of clientList) {
+          if (client.url.includes(clickAction) && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        // Open new window if no existing window found
+        if (clients.openWindow) {
+          return clients.openWindow(clickAction);
+        }
+      })
   );
 });

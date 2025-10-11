@@ -11,6 +11,7 @@ export const useFCM = () => {
 
   useEffect(() => {
     let unsubscribeAuth: () => void;
+    let unsubscribeMessage: (() => void) | undefined;
 
     const requestPermissionAndSetup = async () => {
       try {
@@ -39,7 +40,7 @@ export const useFCM = () => {
         console.log('🔔 Notification permission:', currentPermission);
 
         if (currentPermission === 'granted') {
-          await setupFCM();
+          unsubscribeMessage = await setupFCM();
         } else if (currentPermission === 'denied') {
           console.log('❌ Notification permission denied');
           setError('Notification permission denied');
@@ -199,28 +200,59 @@ export const useFCM = () => {
         console.log('✅ Token saved to Firestore for admin:', currentUser.uid);
         setTokenSaved(true);
 
-        // Setup foreground handler
+        // Setup foreground message handler with enhanced logging
+        console.log('👂 Setting up foreground message listener...');
         const unsubscribe = onMessage(messaging, (payload) => {
-          console.log('📬 Foreground message received:', payload);
+          console.log('\n🎉 ========== NOTIFICATION RECEIVED ==========');
+          console.log('📬 Foreground message received at:', new Date().toLocaleTimeString());
+          console.log('📦 Full payload:', payload);
+          
           if (payload.notification) {
-            console.log('🔔 Displaying notification:', payload.notification.title);
-            new Notification(payload.notification.title || 'Notification', {
-              body: payload.notification.body || 'No body',
-              icon: '/mihrabLogo.png',
-              badge: '/apple-logo.png',
-              tag: 'admin-notification',
-            });
+            console.log('📢 Notification data:');
+            console.log('   Title:', payload.notification.title);
+            console.log('   Body:', payload.notification.body);
+            console.log('   Icon:', payload.notification.icon);
             
+            // Show browser notification
+            console.log('🔔 Displaying browser notification...');
+            const notification = new Notification(
+              payload.notification.title || 'New Notification', 
+              {
+                body: payload.notification.body || 'You have a new notification',
+                icon: payload.notification.icon || '/mihrabLogo.png',
+                badge: '/apple-logo.png',
+                tag: 'admin-notification',
+                requireInteraction: true, // Notification stays until user dismisses
+                data: payload.data,
+              }
+            );
+
+            // Handle notification click
+            notification.onclick = (event) => {
+              console.log('🖱️ Notification clicked!');
+              event.preventDefault();
+              window.focus();
+              const clickAction = payload.data?.click_action || '/admin/dashboard';
+              window.location.href = clickAction;
+              notification.close();
+            };
+
+            console.log('✅ Browser notification displayed successfully');
           } else {
             console.warn('⚠️ No notification data in payload');
           }
+          
+          if (payload.data) {
+            console.log('📊 Custom data:', payload.data);
+          }
+          
+          console.log('============================================\n');
         });
 
-        return () => {
-          console.log('🧹 Cleaning up FCM listeners');
-          unsubscribe();
-          if (unsubscribeAuth) unsubscribeAuth();
-        };
+        console.log('✅ Foreground listener is now ACTIVE and waiting for messages');
+        console.log('💡 This tab must remain open to receive notifications');
+
+        return unsubscribe;
       } catch (err: any) {
         console.error('FCM setup error:', err);
         if (err.name === 'AbortError') {
@@ -240,14 +272,23 @@ export const useFCM = () => {
     };
 
     if (typeof window !== 'undefined') {
-      console.log('🚀 Initializing FCM setup');
+      console.log('🚀 Initializing FCM setup on page:', window.location.pathname);
       requestPermissionAndSetup();
     }
 
+    // Cleanup function
     return () => {
-      if (unsubscribeAuth) unsubscribeAuth();
+      console.log('🧹 Cleaning up FCM hook...');
+      if (unsubscribeAuth) {
+        unsubscribeAuth();
+        console.log('   Auth listener cleaned up');
+      }
+      if (unsubscribeMessage) {
+        unsubscribeMessage();
+        console.log('   Message listener cleaned up');
+      }
     };
-  }, []);
+  }, []); // Empty dependency array - only run once on mount
 
   return { permission, error, tokenSaved };
 };
