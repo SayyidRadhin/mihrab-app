@@ -210,10 +210,7 @@
           }
 
           // Export runtime config
-          export const config = {
-            runtime: 'nodejs',
-            maxDuration: 5, // 5 seconds max
-          };
+        
 
           // Optional: Health check endpoint
           export async function GET() {
