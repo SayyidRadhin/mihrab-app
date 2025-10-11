@@ -172,7 +172,7 @@ export const useFCM = () => {
         console.log('✅ FCM Token:', token.substring(0, 20) + '...');
 
         // Wait for auth state
-        const currentUser = await new Promise((resolve) => {
+        const currentUser = await new Promise<import('firebase/auth').User | null>((resolve) => {
           unsubscribeAuth = auth.onAuthStateChanged((user) => {
             console.log('🔍 Auth state resolved:', user ? user.uid : 'null');
             resolve(user);

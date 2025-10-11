@@ -361,13 +361,13 @@ function Page() {
                   <>
                     Push notifications disabled: No active service worker.
                     <br />
-                    <small>Check DevTools > Application > Service Workers to ensure firebase-messaging-sw.js is active. Try refreshing the page.</small>
+                    <small>Check DevToolsApplication  Service Workers to ensure firebase-messaging-sw.js is active. Try refreshing the page.</small>
                   </>
                 ) : fcmError === 'Invalid service worker registration' ? (
                   <>
                     Push notifications disabled: Invalid service worker registration.
                     <br />
-                    <small>Check firebase-messaging-sw.js and ensure it’s active in DevTools > Application > Service Workers.</small>
+                    <small>Check firebase-messaging-sw.js and ensure it’s active in DevTools  Application  Service Workers.</small>
                   </>
                 ) : fcmError === 'Browser storage is blocked' ? (
                   <>
