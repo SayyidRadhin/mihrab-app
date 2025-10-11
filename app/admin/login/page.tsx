@@ -14,20 +14,22 @@ const Page = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async (e) => {
+interface HandleLoginEvent extends React.FormEvent<HTMLFormElement> {}
+
+const handleLogin = async (e: HandleLoginEvent): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.replace("/admin/dashboard");
+        await signInWithEmailAndPassword(auth, email, password);
+        router.replace("/admin/dashboard");
     } catch (err) {
-      setError("Invalid credentials or account not found");
+        setError("Invalid credentials or account not found");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   return (
     <div>

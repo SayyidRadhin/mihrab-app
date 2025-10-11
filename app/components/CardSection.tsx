@@ -15,7 +15,7 @@ function CardSection() {
   // Animation variants for cards
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: { delay: i * 0.2, duration: 0.5, ease: "easeOut" },
@@ -30,7 +30,7 @@ function CardSection() {
   // Animation variants for h6 and h2
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: { delay: i * 0.3, duration: 0.5, ease: "easeOut" },

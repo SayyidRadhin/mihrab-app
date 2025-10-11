@@ -9,6 +9,7 @@ import { studentColumn } from "./column";
 import { Button } from "@/components/ui/button";
 import { auth, db } from "@/app/lib/firebaseconfig";
 import Nav from "./nav";
+import { useFCM } from "@/app/hooks/useFCM";
 
 type Student = {
   id: string;
@@ -30,6 +31,9 @@ function Page() {
   const [lastDocSnap, setLastDocSnap] = useState<DocumentSnapshot | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [initialFetchDone, setInitialFetchDone] = useState(false);
+
+  // Initialize FCM for admin notifications
+  useFCM();
 
   const initDB = () => {
     return new Promise<IDBDatabase>((resolve, reject) => {
@@ -86,7 +90,6 @@ function Page() {
     }
   };
 
-  // Initial fetch from Firestore
   const fetchInitialStudents = async () => {
     console.log("Fetching initial data from Firebase");
     try {
@@ -105,7 +108,6 @@ function Page() {
 
       const newData = snap.docs.map((doc) => {
         const data = doc.data();
-        // Convert Firestore timestamp to ISO string
         const registrationDate = data.registrationDate?.toDate?.()?.toISOString() || new Date().toISOString();
         return {
           id: doc.id,
@@ -239,10 +241,8 @@ function Page() {
     if (!loading && !initialFetchDone) {
       loadFromIDB().then((cachedData) => {
         if (cachedData.length === 0) {
-          // No cached data, fetch from Firebase
           fetchInitialStudents();
         } else {
-          // Have cached data, check for new students
           fetchNewStudents();
         }
         setInitialFetchDone(true);

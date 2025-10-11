@@ -1,0 +1,44 @@
+// public/firebase-messaging-sw.js
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
+
+// Initialize Firebase in the service worker
+firebase.initializeApp({
+ apiKey: "AIzaSyCTcKutWNHEreqE6q1mm3AgAkDUcn6x_go",
+  authDomain: "mehrabstudy.firebaseapp.com",
+  projectId: "mehrabstudy",
+  storageBucket: "mehrabstudy.firebasestorage.app",
+  messagingSenderId: "991598494491",
+  appId: "1:991598494491:web:b36000f44a756f464509be",
+  measurementId: "G-NCLES6G3CX"
+});
+
+const messaging = firebase.messaging();
+
+// Handle background messages
+messaging.onBackgroundMessage((payload) => {
+  console.log('Received background message:', payload);
+
+  const notificationTitle = payload.notification.title || 'New Notification';
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: '/logo.png',
+    badge: '/badge.png',
+    tag: 'new-registration',
+    data: payload.data,
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+// Handle notification clicks
+self.addEventListener('notificationclick', (event) => {
+  console.log('Notification clicked:', event);
+  
+  event.notification.close();
+  
+  // Open the admin dashboard when notification is clicked
+  event.waitUntil(
+    clients.openWindow('/admin/dashboard')
+  );
+});

@@ -41,26 +41,46 @@ export default function Page() {
   });
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { id: any; value: any; }; }) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSelectChange = (value) => {
+  const handleSelectChange = (value: any) => {
     setFormData((prev) => ({ ...prev, course: value }));
   };
 
-  const handlePhoneChange = (phone) => {
+  const handlePhoneChange = (phone: any) => {
     setFormData((prev) => ({ ...prev, phone: phone || "" }));
   };
 
-  const handleSubmit = async (e) => {
+  interface FormData {
+    name: string;
+    age: string;
+    gender: string;
+    phone: string;
+    class: string;
+    course: string;
+  }
+
+  // Helper function to get course display name
+  const getCourseDisplayName = (courseValue: string): string => {
+    const courseMap: { [key: string]: string } = {
+      'madrasa': 'Madrasa Education',
+      'quran': 'Quran Hifz',
+      'school': 'School'
+    };
+    return courseMap[courseValue] || courseValue;
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      await addDoc(collection(db, "students"), {
+      // Step 1: Save student to Firestore
+      const docRef = await addDoc(collection(db, "students"), {
         name: formData.name,
         age: formData.age,
         gender: formData.gender,
@@ -71,8 +91,44 @@ export default function Page() {
         registrationDate: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
+
+      console.log('✅ Student registered with ID:', docRef.id);
+
+      // Step 2: Send notification to admins
+      try {
+        console.log('📱 Sending notification to admins...');
+        
+        const response = await fetch('/api/send-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            studentName: formData.name,
+            studentClass: formData.class,
+            course: getCourseDisplayName(formData.course),
+          }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          console.log('✅ Notification sent successfully:', result);
+        } else {
+          console.warn('⚠️ Notification failed:', result);
+          // Don't show error to user - registration was successful
+        }
+      } catch (notificationError) {
+        console.error('❌ Error sending notification:', notificationError);
+        // Don't block registration if notification fails
+        // The student is already registered in Firestore
+      }
+
+      // Step 3: Redirect to success page
       Router.push("/");
+      
     } catch (err) {
+      console.error('❌ Registration error:', err);
       setError("Failed to register. Please try again.");
     } finally {
       setLoading(false);
@@ -112,7 +168,7 @@ export default function Page() {
               <CardHeader>
                 <CardTitle className="text-4xl font-bold text-[#262364]">Join us</CardTitle>
                 <CardDescription className="">
-                  Unlock knowledge, embrace growth today! Join us and start your learning journey together, let’s shape a brighter future through education.
+                  Unlock knowledge, embrace growth today! Join us and start your learning journey together, let's shape a brighter future through education.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -148,7 +204,7 @@ export default function Page() {
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="course">Select course</Label>
-                    <Select onValueChange={handleSelectChange} value={formData.course}>
+                    <Select onValueChange={handleSelectChange} value={formData.course} required>
                       <SelectTrigger id="course">
                         <SelectValue placeholder="Choose a course" />
                       </SelectTrigger>

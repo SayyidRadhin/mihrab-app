@@ -14,7 +14,7 @@ export default function DetailSection() {
 
   // Animation variants for image and text container
   const contentVariants = {
-    hidden: { opacity: 0, x: (index) => (index === 0 ? -50 : 50) },
+    hidden: { opacity: 0, x: 0 },
     visible: {
       opacity: 1,
       x: 0,
@@ -51,7 +51,7 @@ export default function DetailSection() {
           variants={contentVariants}
           initial="hidden"
           whileInView="visible"
-          custom={0}
+          style={{ x: -50 }}
           viewport={{ once: true }}
         >
           <Image
@@ -69,7 +69,7 @@ export default function DetailSection() {
           variants={contentVariants}
           initial="hidden"
           whileInView="visible"
-          custom={1}
+          style={{ x: 50 }}
           viewport={{ once: true }}
         >
           <div className="space-y-4 ">
