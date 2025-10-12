@@ -1,11 +1,12 @@
-import { MetadataRoute } from 'next'
- 
+// app/robots.ts
+import type { MetadataRoute } from 'next'
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/',
+      disallow: ['/admin/'],
     },
     sitemap: 'https://www.mehrabacademy.com/sitemap.xml',
   }
