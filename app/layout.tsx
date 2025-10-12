@@ -16,16 +16,16 @@ export const metadata: Metadata = {
   title: "Mehrab Academy | Learn Online Anytime",
   description: "Join Mehrab Academy, your online learning platform offering courses, guidance, and resources for students to excel academically.",
   alternates: {
-    canonical: "https://www.mehrabacademy.in/",
+    canonical: "https://www.mehrabacademy.com/",
   },
   openGraph: {
     type: "website",
-    url: "https://www.mehrabacademy.in/",
+    url: "https://www.mehrabacademy.com/",
     title: "Mehrab Academy | Learn Online Anytime",
     description: "Join Mehrab Academy, your online learning platform offering courses and resources for students to excel academically.",
     images: [
       {
-        url: "https://www.mehrabacademy.in/og-image.jpg",
+        url: "https://www.mehrabacademy.com/og-image.jpg",
       },
     ],
     locale: "en_IN",

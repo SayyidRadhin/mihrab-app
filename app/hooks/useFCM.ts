@@ -19,7 +19,7 @@ export const useFCM = () => {
         if (perm !== 'granted') {
           setError('Notification permission denied');
           return;
-        }
+        }   
 
         // Step 2: Register service worker
         const registration = await navigator.serviceWorker.register(

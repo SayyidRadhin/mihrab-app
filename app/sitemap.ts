@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.mehrabacademy.in';
+  const baseUrl = 'https://www.mehrabacademy.com';
   const currentDate = new Date('2025-10-12T22:31:00+05:30'); // Current date and time: October 12, 2025, 10:31 PM IST
 
   return [
