@@ -4,16 +4,16 @@ import React from 'react';
 const WhatsupButton: React.FC = () => {
   return (
 	  <a
-        href="https://wa.me/1234567890" // CHANGE THIS TO YOUR ADMIN WHATSAPP NUMBER
+        href="https://wa.me/918891296161" // CHANGE THIS TO YOUR ADMIN WHATSAPP NUMBER
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-primaryAccent text-white p-4 rounded-full shadow-lg hover:bg-slate-600 transition flex items-center"
+        className="fixed bottom-4 right-4 bg-emerald-600 text-white py-4 px-5 opacity- rounded-full shadow-lg hover:bg-slate-600 transition flex items-center"
       >
         <Image
           src="/whatsapp.svg" // Replace with your Flaticon WhatsApp icon
           alt="WhatsApp"
-          width={25}
-          height={25}
+          width={20}
+          height={20}
           className=" text-white"
         />
       </a>

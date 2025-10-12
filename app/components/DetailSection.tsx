@@ -42,6 +42,7 @@ export default function DetailSection() {
       className="py-28 max-w-5xl grid items-center w-full mt-0 flex-col mx-auto max-lg:px-[10%]"
       variants={sectionVariants}
       initial="hidden"
+      id='learning-apps'
       whileInView="visible"
       viewport={{ once: true }}
     >
@@ -92,7 +93,7 @@ export default function DetailSection() {
               <span className="font-semibold text-[#262364]">Start your Hifz journey today!</span>
             </motion.p>
             <div className="flex flex-row sm:gap-4 gap-2 max-sm:w-full max-sm:justify-center max-sm:flex-col">
-              <motion.div
+              <motion.button
                 onClick={() => Router.push('/quranapp')}
                 className="sm:text-lg flex cursor-pointer  text-center bg-secondaryAccent justify-center gap-2 max-sm:w-full text-base border-solid border border-slate-400 text-slate-600 rounded-full sm:px-7 sm:py-3 px-6 py-3 font-semibold transition duration-300 ease"
                 variants={buttonVariants}
@@ -106,8 +107,8 @@ export default function DetailSection() {
                   className="mt-0.5"
                 />
                 Google Play
-              </motion.div>
-              <motion.div
+              </motion.button>
+              <motion.button
                 onClick={() => Router.push('/quranapp')}
                 className="sm:text-lg cursor-pointer flex text-center bg-secondaryAccent justify-center gap-2 max-sm:w-full text-base border-solid border border-slate-400 text-slate-600 rounded-full sm:px-7 sm:py-3 px-6 py-3 font-semibold transition duration-300 ease"
                 variants={buttonVariants}
@@ -121,7 +122,7 @@ export default function DetailSection() {
                   className="mt-0.5"
                 />
                 App Store
-              </motion.div>
+              </motion.button>
             </div>
           </div>
         </motion.div>

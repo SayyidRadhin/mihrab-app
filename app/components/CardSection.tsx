@@ -8,7 +8,7 @@ function CardSection() {
 
   // Animation variants for the section
   const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
@@ -47,7 +47,7 @@ function CardSection() {
       viewport={{ once: true }}
     >
       <div className="max-w-5xl w-full flex-col mx-auto mt-6">
-        <motion.h6
+        <motion.p
           className="text-center text-base text-secondary py-4 mb-4"
           variants={textVariants}
           initial="hidden"
@@ -56,7 +56,7 @@ function CardSection() {
           viewport={{ once: false }}
         >
           courses
-        </motion.h6>
+        </motion.p>
 
         <motion.h2
           className="text-center text-4xl text-secondary font-semibold uppercase"
@@ -103,7 +103,7 @@ function CardSection() {
               link: "/joinnow",
             },
           ].map((course, index) => (
-            <motion.div
+            <motion.article
               key={index}
               className="card shadow-md flex-1 rounded-3xl bg-secondaryAccent px-4 py-6 flex flex-col items-center"
               variants={cardVariants}
@@ -112,7 +112,7 @@ function CardSection() {
               custom={index}
               viewport={{ once: true }}
             >
-              <h6 className="font-bold text-[#262364]">{course.number}</h6>
+              <span className="font-bold text-[#262364]">{course.number}</span>
 
               <h1 className="font-bold text-center text-[#262364] text-3xl mt-2">
                 {course.title}
@@ -120,7 +120,7 @@ function CardSection() {
 
               <Image
                 src="/laptop.png"
-                alt=""
+                alt="Student learning through laptop in online madrasa course"
                 width={15}
                 height={15}
                 layout="responsive"
@@ -138,7 +138,7 @@ function CardSection() {
               >
                 join now
               </motion.button>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

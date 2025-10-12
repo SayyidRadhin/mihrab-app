@@ -72,8 +72,8 @@ function CardSectionInfo() {
   ];
 
   return (
-    <motion.section
-      id="courses"
+    <motion.article
+      id="features"
       className="py-28 w-full rounded-[2em] mt-0 flex-col mx-auto max-lg:px-[10%] text-black"
       variants={sectionVariants}
       initial="hidden"
@@ -137,7 +137,7 @@ function CardSectionInfo() {
           ))}
         </motion.div>
       </div>
-    </motion.section>
+    </motion.article>
   );
 }
 

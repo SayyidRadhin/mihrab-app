@@ -11,7 +11,7 @@ export default function Footer() {
         <div className='flex gap-[10%] max-sm:flex-col ' >
         <div className="flex flex-row sm:flex-col justify-between items-center mb-6 max-sm:mb-10 px-4">
           <div className="text-2xl font-bold mb-4 md:mb-0">MEHRAB</div>
-          <button className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition duration-300">
+          <button className="bg-orange-500 text-white px-6 py-2 rounded-3xl hover:bg-orange-600 transition duration-300">
             Join now
           </button>
         </div>

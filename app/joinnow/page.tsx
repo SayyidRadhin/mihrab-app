@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { LucidePlay, LucideApple, LibraryIcon, MessageCircleIcon } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import React from 'react';
 import {
   Card,
@@ -27,6 +26,9 @@ import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { db } from "../lib/firebaseconfig";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+import Head from "next/head";
+
 
 export default function Page() {
   const Router = useRouter();
@@ -87,7 +89,7 @@ export default function Page() {
         phone: formData.phone,
         class: formData.class,
         course: formData.course,
-        email: `${formData.name.toLowerCase().replace(/\s/g, '')}@meharabacademy.com`,
+        email: `${formData.name.toLowerCase().replace(/\s/g, '')}@mehrabacademy.in`,
         registrationDate: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
@@ -137,8 +139,41 @@ export default function Page() {
 
   return (
     <div className="scroll-smooth bg-primaryAccent font-raleway overflow-hidden grid w-full min-h-screen">
+      <Head>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Join Mehrab Academy",
+            "url": "https://www.mehrabacademy.in/joinnow",
+            "description": "Register at Mehrab Academy to start your journey in Quran memorization, Madrasa education, and School studies. Learn online with expert teachers.",
+            "publisher": {
+              "@type": "EducationalOrganization",
+              "name": "Mehrab Academy",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.mehrabacademy.in/mihrabLogo.png"
+              }
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Online Course Registration",
+            "provider": {
+              "@type": "EducationalOrganization",
+              "name": "Mehrab Academy",
+              "sameAs": "https://www.mehrabacademy.in/"
+            },
+            "description": "Enroll in Quran Hifz, Madrasa Education, or School courses through Mehrab Academy's online registration form.",
+            "url": "https://www.mehrabacademy.in/joinnow"
+          })}
+        </script>
+      </Head>
       <section className='py-28 max-w-5xl grid items-center w-full mt-0 flex-col mx-auto max-lg:px-[10%]'>
-        <div className='text-black h-full flex sm:flex-row justify-center flex-col max-sm:mt-10 max-sm:gap-8 gap-12 w-full max-h-[80%] sm:h-[80%] items-center'>
+        <article className='text-black h-full flex sm:flex-row justify-center flex-col max-sm:mt-10 max-sm:gap-8 gap-12 w-full max-h-[80%] sm:h-[80%] items-center'>
           <div className="flex flex-col w-full sm:-mt-6 max-sm:text-center">
             <div className='space-y-4'>
               <div className='flex gap-4 flex-row max-sm:flex-col items-center max-sm:justify-center'>
@@ -146,11 +181,11 @@ export default function Page() {
                   <LibraryIcon className='text-primaryAccent bg-secondaryAccent' size={40} />
                 </div>
                 <h2 className='text-4xl max-sm:text-center text-secondaryAccent font-semibold leading-tight'>
-                  Meharab Academy
+                  Mehrab Academy
                 </h2>
               </div>
               <p className='text-slate-100 text-base pt-2 max-w-[40ch] leading-relaxed'>
-                Meharab Academy offers high-quality online classes from LKG to 10th standard, combining academic excellence with moral values. Our live and recorded sessions ensure flexible, accessible learning for every student. We aim to nurture your purpose and dreams. Start your journey today!
+                Mehrab Academy offers high-quality online classes from LKG to 10th standard, combining academic excellence with moral values. Our live and recorded sessions ensure flexible, accessible learning for every student. We aim to nurture your purpose and dreams. Start your journey today!
               </p>
               <div className="flex flex-row sm:gap-4 gap-2 max-sm:w-full max-sm:justify-center max-sm:flex-col">
                 <div
@@ -164,7 +199,7 @@ export default function Page() {
             </div>
           </div>
           <div className="w-full flex justify-center">
-            <Card className="bg-white rounded-2xl shadow-lg p-6">
+            <article className="bg-white rounded-2xl shadow-lg p-6">
               <CardHeader>
                 <CardTitle className="text-4xl font-bold text-[#262364]">Join us</CardTitle>
                 <CardDescription className="">
@@ -227,9 +262,9 @@ export default function Page() {
                   {loading ? "Registering..." : "Register"}
                 </Button>
               </CardFooter>
-            </Card>
+            </article>
           </div>
-        </div>
+        </article>
       </section>
     </div>
   );
