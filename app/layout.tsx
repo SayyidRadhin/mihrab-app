@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mehrab Academy | Learn Online Anytime",
     description: "Learn online at Mehrab Academy — explore courses and improve your skills anytime, anywhere.",
-    images: ["https://www.mehrabacademy.in/og-image.jpg"],
+    images: ["https://www.mehrabacademy.com/og-image.jpg"],
     creator: "@mehrabacademy",
   },
 };
