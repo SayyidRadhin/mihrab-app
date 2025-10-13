@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Anek_Malayalam, Inter, Bungee, Raleway } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "./globals.css";
 import GlobalContextProvider from "./contexts/globalContext";
 
-const inter = Inter({ subsets: ["latin"] });
 
 const RalewayFont = Raleway({
   subsets: ['latin'],
@@ -30,13 +29,22 @@ export const metadata: Metadata = {
     ],
     locale: "en_IN",
   },
+  keywords: [
+    "Mehrab Academy",
+    "online learning",
+    "courses",
+    "education",
+    "Madrasa Education",
+    "Quran Learning Online",
+    "Quran Memorizing"
+  ],
   twitter: {
     card: "summary_large_image",
     title: "Mehrab Academy | Learn Online Anytime",
     description: "Learn online at Mehrab Academy — explore courses and improve your skills anytime, anywhere.",
     images: ["https://www.mehrabacademy.com/og-image.jpg"],
     creator: "@mehrabacademy",
-  },
+  }
 };
 
 export default function RootLayout({
