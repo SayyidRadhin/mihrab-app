@@ -19,6 +19,6 @@ export default function manifest() {
     theme_color: "#ffffff",
     start_url: '/',
     background_color: "#ffffff",
-    display: "standalone"
+    display: "standalone      "
   };
 }
