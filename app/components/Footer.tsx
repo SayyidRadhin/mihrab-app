@@ -16,9 +16,9 @@ export default function Footer() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 max-sm:text-lg m max-md:w-full justify-around  gap-8  text-sm max-sm:justify-center">
+        <div className="grid grid-cols-1 px-4 sm:grid-cols-3 max-sm:text-lg m max-md:w-full justify-around  gap-8  text-sm max-sm:justify-center">
           {/* Academy Column */}
-            <ul className="space-y-1 flex flex-col max-sm:items-center">
+            <ul className="space-y-1 flex flex-col max-sm:items-cente">
                             <h3 className="font-semibold mb-2">Academy</h3>
 
               <li><Link href="/courses">Courses</Link></li>
@@ -29,7 +29,7 @@ export default function Footer() {
             </ul>
 
           {/* Support Column */}
-            <ul className="space-y-1 flex flex-col max-sm:items-center">
+            <ul className="space-y-1 flex flex-col max-sm:items-cente">
                             <h3 className="font-semibold mb-2">Support</h3>
 
               <li><Link href="/help">Help</Link></li>
@@ -51,7 +51,7 @@ export default function Footer() {
           </div> */}
 
           {/* Connect Column */}
-            <ul className="space-y-1 flex flex-col max-sm:items-center">
+            <ul className="space-y-1 flex flex-col max-sm:items-cente">
                             <h3 className="font-semibold mb-2">Connect</h3>
 
               <li><Link href="/email">Email</Link></li>

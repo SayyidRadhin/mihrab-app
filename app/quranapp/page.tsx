@@ -6,6 +6,8 @@ import AppDetails from "./components/Appdetails";
 import NavbarQuran from "./components/Navbarquran";
 import FooterQuran from "./components/Footer";
 import Head from "next/head";
+import BannerApp from "./components/BannerApp";
+import AppFaq from "./components/AppFaq";
 
 
 export default function Home() {
@@ -77,6 +79,8 @@ export default function Home() {
             </div>
           </section>
     <AppDetails/>
+    <BannerApp />
+    <AppFaq />
     <FooterQuran />
       
 

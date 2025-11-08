@@ -10,7 +10,7 @@ function FooterQuran() {
             <h2 className=' text-4xl sm:text-5xl  text-white max-sm:text-center uppercase font-bold sm:max-w-[10ch]  '>
               Mehrab Hifz App
             </h2>
-                       <Link href="/"> <button className=" bg-secondaryAccent text-sm text-primaryAccent rounded px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">Download Now</button></Link>
+                       <Link href="/"> <button className=" bg-secondaryAccent text-sm text-primaryAccent rounded-3xl px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">Download Now</button></Link>
 
         </div>
         <div className=' mb-14 flex text-secondaryAccent flex-col items-center gap-4 max-sm:gap-6 sm:flex-row sm:justify-between '>

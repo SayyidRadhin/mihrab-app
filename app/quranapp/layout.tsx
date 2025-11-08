@@ -7,6 +7,9 @@ import type { Metadata } from "next";
 /*                              PAGE METADATA                                 */
 /* -------------------------------------------------------------------------- */
 export const metadata: Metadata = {
+  icons: {
+    icon: '/icon.png',
+  },
   title:
     "Quran Memorization App – Hifz Quran Online",
   description:

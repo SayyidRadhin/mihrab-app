@@ -100,8 +100,9 @@ function CardSectionInfo() {
             viewport={{ once: false }}
           >
             <p>
-              Unlike traditional search firms, we’ve been part of building innovative companies – like – from the ground up, giving us a deep understanding of what it takes to build effective, thriving teams.
-            </p>
+  Mehrab Academy is a leading online Islamic learning platform offering <strong>Online Madrasa Classes</strong>, <strong>Quran Memorization (Hifz)</strong>, and <strong>Online School Courses</strong> for children and adults. Our mission is to make authentic Islamic education accessible to every home with expert teachers, interactive sessions, and flexible schedules.
+</p>
+
           </motion.div>
         </div>
 

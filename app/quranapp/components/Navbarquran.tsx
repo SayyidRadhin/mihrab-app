@@ -46,7 +46,7 @@ export default function NavbarQuran() {
           </div>
           <div className="flex gap-4 items-center text-sm">
         
-           <Link href="/"> <button className=" bg-primaryAccent text-sm text-white rounded px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">Download Now</button></Link>
+           <Link href="/"> <button className=" bg-primaryAccent text-sm text-white rounded-3xl px-6 py-3 font-semibold transition duration-300 ease hover:scale-[1.1] hover:bg-opacity-95">Download Now</button></Link>
 
           </div>
         </motion.nav>

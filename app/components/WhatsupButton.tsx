@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const WhatsupButton: React.FC = () => {
   return (
-	  <a
+	  <Link
         href="https://wa.me/918891296161" // CHANGE THIS TO YOUR ADMIN WHATSAPP NUMBER
         target="_blank"
         rel="noopener noreferrer"
@@ -16,7 +17,7 @@ const WhatsupButton: React.FC = () => {
           height={20}
           className=" text-white"
         />
-      </a>
+      </Link>
   );
 };
 
